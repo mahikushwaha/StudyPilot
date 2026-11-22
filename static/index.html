@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>StudyPilot</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f6fb;--card:#fff;--ink:#14162b;--mut:#6b6f8a;--line:#e6e8f2;--acc:#5b4bff;--acc2:#8b5cf6;--ok:#16a34a;--warn:#f59e0b;--bad:#ef4444;--soft:#eef0ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1020;--card:#181a30;--ink:#eef0ff;--mut:#9a9eb8;--line:#272a48;--soft:#222552}}
+:root[data-theme="dark"]{--bg:#0f1020;--card:#181a30;--ink:#eef0ff;--mut:#9a9eb8;--line:#272a48;--soft:#222552}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:500 15px/1.5 'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+.btn{border:0;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;cursor:pointer}
+.btn.g{background:var(--soft);color:var(--acc)}
+.btn.s{padding:8px 12px;font-size:13px;border-radius:10px}
+input,select,textarea{width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;outline:0}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin:12px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;color:#fff;font-style:normal}
+/* landing */
+.land{max-width:980px;margin:0 auto;padding:28px 20px 40px}
+.land h1{font-size:clamp(30px,6vw,52px);line-height:1.1;font-weight:800;margin:56px 0 10px;letter-spacing:-1px}
+.land h1 span{background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.land p.sub{color:var(--mut);font-size:17px;margin-bottom:32px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.opt{text-align:left;cursor:pointer;border:1.5px solid var(--line);background:var(--card);border-radius:22px;padding:24px;transition:.2s}
+.opt:hover{border-color:var(--acc);transform:translateY(-3px);box-shadow:0 14px 34px rgba(91,75,255,.14)}
+.opt .ic{width:54px;height:54px;border-radius:16px;background:var(--soft);display:grid;place-items:center;font-size:28px;margin-bottom:16px}
+.opt h3{font-size:19px;font-weight:800}.opt p{color:var(--mut);font-size:14px;margin-top:4px}
+/* auth */
+.auth{max-width:420px;margin:0 auto;padding:24px 20px 40px}
+.back{background:none;border:0;color:var(--mut);cursor:pointer;font-weight:700;padding:8px 0;margin-bottom:12px}
+.auth h2{font-size:28px;font-weight:800}.auth .tag{display:inline-block;background:var(--soft);color:var(--acc);padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;margin:8px 0 6px}
+.err{color:var(--bad);font-size:13px;font-weight:600;margin-top:10px;min-height:18px}
+.tabs2{display:flex;background:var(--soft);border-radius:12px;padding:4px;margin:18px 0 4px}
+.tabs2 button{flex:1;border:0;background:none;padding:9px;border-radius:9px;font-weight:700;color:var(--mut);cursor:pointer}
+.tabs2 button.on{background:var(--card);color:var(--acc);box-shadow:0 1px 6px rgba(0,0,0,.08)}
+/* shell */
+.shell{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.side{padding:22px 16px;border-right:1px solid var(--line);background:var(--card);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
+.side .logo{margin-bottom:22px}
+.nav{display:flex;align-items:center;gap:12px;border:0;background:none;padding:12px 14px;border-radius:12px;font-weight:700;color:var(--mut);cursor:pointer;text-align:left}
+.nav.on{background:var(--soft);color:var(--acc)}
+.who{margin-top:auto;font-size:13px;color:var(--mut)}.who b{display:block;color:var(--ink);font-size:14px}
+.main{padding:28px;max-width:960px;width:100%}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:22px;flex-wrap:wrap}
+.head h2{font-size:26px;font-weight:800;letter-spacing:-.5px}.head p{color:var(--mut)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.stat b{display:block;font-size:28px;font-weight:800;letter-spacing:-1px}.stat span{color:var(--mut);font-size:13px;font-weight:600}
+.hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.ring{position:relative;width:130px;height:130px}.ring svg{transform:rotate(-90deg)}
+.ring div{position:absolute;inset:0;display:grid;place-items:center;font-size:28px;font-weight:800}
+.chip{display:inline-block;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.bar{height:8px;background:var(--soft);border-radius:9px;overflow:hidden;margin-top:10px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:9px}
+.row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:var(--acc);flex:none}
+.row.done span{text-decoration:line-through;color:var(--mut)}
+.row small{color:var(--mut);margin-left:auto;font-size:12px;white-space:nowrap}
+.x{border:0;background:none;color:var(--mut);cursor:pointer;font-size:18px}
+.sec{font-weight:800;font-size:16px;margin:0 0 10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.chips button{border:1.5px solid var(--line);background:var(--card);padding:7px 12px;border-radius:99px;cursor:pointer;font-weight:600;font-size:13px}
+.stack>*+*{margin-top:14px}
+/* chat */
+.chat{display:flex;flex-direction:column;height:calc(100vh - 150px);min-height:420px}
+.msgs{flex:1;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px 2px 12px}
+.m{max-width:82%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;word-wrap:break-word}
+.m.u{align-self:flex-end;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;border-bottom-right-radius:4px}
+.m.a{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.send{display:flex;gap:10px}.send input{flex:1}
+.empty{text-align:center;color:var(--mut);padding:26px 10px}
+.bot{display:none}
+@media (max-width:760px){
+.shell{display:block;padding-bottom:78px}.side{display:none}.main{padding:18px 16px}
+.bot{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+.bot button{flex:1;border:0;background:none;padding:6px 2px;font-size:11px;font-weight:700;color:var(--mut);display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.bot button b{font-size:20px;font-weight:400}.bot button.on{color:var(--acc)}
+.chat{height:calc(100vh - 220px)}.two{grid-template-columns:1fr}
+}
+.chips button.on{background:var(--soft);border-color:var(--acc);color:var(--acc)}
+.steps{display:flex;gap:6px;margin:22px 0 8px}.steps i{flex:1;height:5px;border-radius:9px;background:var(--line)}.steps i.on{background:var(--acc)}.stepn{color:var(--mut);font-size:13px;font-weight:700}
+.next{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;margin-bottom:14px}.next small{opacity:.85;font-weight:700}.next h3{font-size:20px;margin:4px 0}.next p{opacity:.85;margin-bottom:12px}.next .btn{background:#fff;color:var(--acc)}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:700;z-index:20}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mem={};
+const LS=(k,v)=>{try{if(v===undefined){const r=localStorage.getItem(k);return r?JSON.parse(r):mem[k]||null}localStorage.setItem(k,JSON.stringify(v))}catch(e){if(v===undefined)return mem[k]||null;mem[k]=v}};
+let users=LS('sp_users')||{}, me=null, S={screen:'land',level:null,mode:'signup',tab:'home',open:null,err:''};
+const TK=()=>LS('sp_tk');let _st;
+async function api(p,m='GET',b){const r=await fetch('/api/'+p,{method:m,headers:{'Content-Type':'application/json',Authorization:'Bearer '+(TK()||'')},body:b?JSON.stringify(b):undefined});const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Request failed');return j}
+const save=()=>{clearTimeout(_st);_st=setTimeout(()=>api('state','PUT',me).catch(()=>{}),400)};
+const LV={
+ school:{t:'School Student',i:'🎒',d:'Boards, unit tests and finals',lab:'Class & board',opts:['Class 6','Class 7','Class 8','Class 9','Class 10 · CBSE','Class 10 · State Board','Class 11','Class 12 · CBSE','Class 12 · State Board'],subs:['Maths','Science','English','Social Studies','Physics','Chemistry','Biology','Hindi']},
+ college:{t:'College Student',i:'🎓',d:'Semesters, internals and viva',lab:'Course',opts:['Engineering','Science','Commerce','Arts','Medical','Law','Management','Other'],subs:['Data Structures','DBMS','Operating Systems','Mathematics','Economics','Accounting','Physics','Electronics']},
+ comp:{t:'Competitive Exams',i:'🏆',d:'JEE, NEET, UPSC, MPSC and more',lab:'Target exam',opts:['JEE','NEET','UPSC','MPSC','GATE','CAT','SSC','Banking','CUET'],subs:['Quantitative Aptitude','Reasoning','General Studies','Polity','History','Geography','Physics','Chemistry']}
+};
+// ---- the two tools (Python-style maths, always exact) ----
+function check_exam_readiness(c,t){const p=t>0?Math.round(c/t*100):0;const l=p>=90?'Exam ready':p>=70?'Almost ready':p>=40?'Getting there':'Just starting';return{percent:p,level:l,topics_covered:c,total_topics:t}}
+function hours_needed_per_day(r,d,h){if(d<=0)return{hours_per_day:null,note:'Exam date has passed or is today'};return{hours_per_day:Math.round(r*h/d*10)/10,remaining_topics:r,days_left:d}}
+const days=d=>{if(!d)return null;const a=new Date(d+'T00:00:00'),b=new Date();b.setHours(0,0,0,0);return Math.round((a-b)/864e5)};
+const tone=p=>p>=70?'var(--ok)':p>=40?'var(--warn)':'var(--bad)';
+const ci=s=>s.topics.filter(t=>t.d).length;
+function totals(){let c=0,t=0;me.subs.forEach(s=>{c+=ci(s);t+=s.topics.length});return{c,t}}
+function need(s){const r=s.topics.length-ci(s),d=days(s.exam);if(!d&&d!==0)return null;return hours_needed_per_day(r,d,s.hpt||1.5)}
+function today(){const out=[];me.subs.forEach(s=>{const d=days(s.exam);if(d==null||d<=0)return;const p=s.topics.filter(t=>!t.d),n=Math.ceil(p.length/d);p.slice(0,n).forEach(t=>out.push({s,t}))});return out}
+// ---- render ----
+function R(){const a=$('#app');
+ if(S.screen==='land')a.innerHTML=land();else if(S.screen==='auth')a.innerHTML=auth();else if(S.screen==='setup')a.innerHTML=setup();else{a.innerHTML=shell();if(S.tab==='chat')chatInit()}
+}
+function land(){return `<div class="land"><div class="logo"><i>✦</i>StudyPilot</div><h1>Study smarter.<br><span>Walk in exam‑ready.</span></h1><p class="sub">Tell us who you are and we’ll build your plan.</p><div class="opts">${Object.entries(LV).map(([k,v])=>`<button class="opt" data-a="lvl" data-k="${k}"><div class="ic">${v.i}</div><h3>${v.t}</h3><p>${v.d}</p></button>`).join('')}</div></div>`}
+function auth(){const v=LV[S.level],su=S.mode==='signup';return `<div class="auth"><button class="back" data-a="home">← Back</button><div class="logo"><i>✦</i>StudyPilot</div><div class="tag">${v.i} ${v.t}</div><h2>${su?'Create your account':'Welcome back'}</h2>
+<div class="tabs2"><button class="${su?'on':''}" data-a="mode" data-k="signup">Sign up</button><button class="${su?'':'on'}" data-a="mode" data-k="login">Log in</button></div>
+${su?`<label>Your name</label><input id="nm" autocomplete="name"><label>${v.lab}</label><select id="dt">${v.opts.map(o=>`<option>${o}</option>`).join('')}</select>`:''}
+<label>Email</label><input id="em" type="email" autocomplete="email"><label>Password</label><input id="pw" type="password" data-enter="go" autocomplete="${su?'new-password':'current-password'}">
+<div class="err" id="er">${esc(S.err)}</div><button class="btn" style="width:100%;margin-top:6px" data-a="go">${su?'Get started':'Log in'}</button></div>`}
+const NAV=[['home','Home','⌂'],['subs','Subjects','▤'],['plan','Planner','◷'],['chat','AI Tutor','✦']];
+function shell(){const t=S.tab;return `<div class="shell"><aside class="side"><div class="logo"><i>✦</i>StudyPilot</div>${NAV.map(n=>`<button class="nav ${t===n[0]?'on':''}" data-a="tab" data-k="${n[0]}">${n[2]} ${n[1]}</button>`).join('')}<div class="who"><b>${esc(me.name)}</b>${esc(me.detail)}<br><button class="btn g s" style="margin-top:10px" data-a="out">Log out</button></div></aside><main class="main">${{home,subs,plan,chat}[t]()}</main></div><nav class="bot">${NAV.map(n=>`<button class="${t===n[0]?'on':''}" data-a="tab" data-k="${n[0]}"><b>${n[2]}</b>${n[1]}</button>`).join('')}</nav>`}
+function home(){const{c,t}=totals(),r=check_exam_readiness(c,t),h=new Date().getHours(),g=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+ let hrs=0,nd=null;me.subs.forEach(s=>{const n=need(s);if(n&&n.hours_per_day!=null)hrs+=n.hours_per_day;const d=days(s.exam);if(d!=null&&d>0&&(nd==null||d<nd))nd=d});
+ const td=today(),C=2*Math.PI*54;
+ return `<div class="head"><div><h2>${g}, ${esc(me.name.split(' ')[0])}</h2><p>${esc(me.detail)}</p></div></div>
+${nextCard()}<div class="card hero"><div class="ring"><svg width="130" height="130"><circle cx="65" cy="65" r="54" fill="none" stroke="var(--soft)" stroke-width="12"/><circle cx="65" cy="65" r="54" fill="none" stroke="${tone(r.percent)}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-r.percent/100)}"/></svg><div>${r.percent}%</div></div><div><span class="chip" style="background:var(--soft);color:${tone(r.percent)}">${r.level}</span><h3 style="font-size:20px;margin-top:8px">${c} of ${t} topics covered</h3><p style="color:var(--mut)">${t?'Keep ticking topics off as you finish them.':'Add your subjects to get started.'}</p></div></div>
+<div class="grid"><div class="card stat"><b>${t-c}</b><span>Topics left</span></div><div class="card stat"><b>${nd??'—'}</b><span>Days to next exam</span></div><div class="card stat"><b>${hrs?hrs.toFixed(1)+' h':'—'}</b><span>Needed per day</span></div></div>
+<div class="card" style="margin-top:14px"><p class="sec">Today’s plan</p>${td.length?td.map(x=>`<div class="row"><input type="checkbox" data-a="tg" data-s="${x.s.id}" data-t="${x.s.topics.indexOf(x.t)}"><span>${esc(x.t.n)}</span><small>${esc(x.s.name)}</small></div>`).join(''):`<div class="empty">${me.subs.length?'Set an exam date on a subject to see your daily plan.':'No subjects yet.'}<br><br><button class="btn s" data-a="tab" data-k="subs">Add subjects</button></div>`}</div>`}
+function subs(){return `<div class="head"><div><h2>Subjects</h2><p>Topics and syllabus</p></div></div>
+<div class="card"><label style="margin-top:0">New subject</label><div class="send"><input id="sn" placeholder="e.g. ${esc(LV[me.level].subs[0])}" data-enter="addSub"><button class="btn" data-a="addSub">Add</button></div><div class="chips">${LV[me.level].subs.filter(x=>!me.subs.some(s=>s.name===x)).map(x=>`<button data-a="addSub" data-n="${esc(x)}">+ ${esc(x)}</button>`).join('')}</div></div>
+<div class="stack" style="margin-top:14px">${me.subs.map(s=>{const p=s.topics.length?Math.round(ci(s)/s.topics.length*100):0,o=S.open===s.id;return `<div class="card"><div class="row" style="border:0;padding:0;cursor:pointer" data-a="open" data-s="${s.id}"><div style="flex:1"><b style="font-size:17px">${esc(s.name)}</b><div style="color:var(--mut);font-size:13px">${ci(s)}/${s.topics.length} topics · ${s.exam?'exam '+esc(s.exam):'no exam date'}</div></div><span class="chip" style="background:var(--soft);color:${tone(p)}">${p}%</span></div><div class="bar"><i style="width:${p}%"></i></div>
+${o?`<div style="margin-top:12px">${s.topics.map((t,i)=>`<div class="row ${t.d?'done':''}"><input type="checkbox" ${t.d?'checked':''} data-a="tg" data-s="${s.id}" data-t="${i}"><span>${esc(t.n)}</span><button class="x" data-a="dt" data-s="${s.id}" data-t="${i}">×</button></div>`).join('')||'<div class="empty">No topics yet</div>'}
+${upl(s.id)}<label>Add topics (one per line or comma separated)</label><textarea id="tp" rows="3"></textarea><div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn s" data-a="addT" data-s="${s.id}">Add topics</button><button class="btn g s" data-a="delS" data-s="${s.id}">Delete subject</button></div></div>`:''}</div>`}).join('')||'<div class="card empty">Add your first subject above.</div>'}</div>`}
+function plan(){const hrs=me.avail||4;let tot=0,list='';
+ me.subs.forEach(s=>{const n=need(s),d=days(s.exam),r=s.topics.length-ci(s);if(n&&n.hours_per_day!=null)tot+=n.hours_per_day;
+ list+=`<div class="card"><div style="display:flex;justify-content:space-between;gap:10px"><b style="font-size:17px">${esc(s.name)}</b><span style="font-weight:800;font-size:18px">${n&&n.hours_per_day!=null?n.hours_per_day+' h/day':'—'}</span></div><div style="color:var(--mut);font-size:13px">${r} topics left${d!=null?' · '+(d>0?d+' days to go':'exam passed'):''}</div>
+ <div class="two"><div><label>Exam date</label><input type="date" data-a="exam" data-s="${s.id}" value="${esc(s.exam||'')}"></div><div><label>Hours per topic</label><input type="number" min="0.25" step="0.25" data-a="hpt" data-s="${s.id}" value="${s.hpt||1.5}"></div></div></div>`});
+ const ok=tot<=hrs;
+ return `<div class="head"><div><h2>Planner</h2><p>Your daily study load</p></div></div>
+<div class="card"><div class="two"><div><label style="margin-top:0">Hours I can study per day</label><input type="number" min="1" max="16" step="0.5" id="av" data-a="avail" value="${hrs}"></div><div><label style="margin-top:0">Needed per day</label><div style="font-size:28px;font-weight:800">${tot.toFixed(1)} h</div></div></div>
+</div>
+${planCheck()}<div class="stack" style="margin-top:14px">${list||'<div class="card empty">Add subjects first.</div>'}</div>`}
+function planCheck(){const av=me.avail||4;let tot=0;const rows=[];
+ me.subs.forEach(s=>{const n=need(s);if(n&&n.hours_per_day!=null){tot+=n.hours_per_day;rows.push([s.name,n.hours_per_day])}});
+ if(!rows.length)return `<div class="card" style="margin-top:14px"><p class="sec">Is my plan realistic?</p><p style="color:var(--mut)">Set an exam date for your subjects to see if your plan works.</p></div>`;
+ tot=Math.round(tot*10)/10;const spare=Math.round((av-tot)*10)/10;
+ const k=tot<=av*.7?['ok','You’re on track','🎉']:tot<=av?['warn','Doable, but tight','⚡']:['bad','You need more time','⏰'];
+ const col={ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)'}[k[0]];
+ const msg=k[0]==='ok'?`You have about ${spare} extra hours a day. Keep going!`:k[0]==='warn'?`Only ${spare} hours a day to spare, so try not to miss study days.`:`You’re short by ${-spare} hours a day. Study more each day, move your exam date, or cut some topics.`;
+ return `<div class="card" style="margin-top:14px;border-color:${col}"><p class="sec">Is my plan realistic?</p><div style="font-size:22px;font-weight:800;color:${col}">${k[2]} ${k[1]}</div><p style="color:var(--mut);margin:4px 0 14px">${msg}</p>
+ <div class="two"><div><small style="color:var(--mut);font-weight:700">YOU NEED</small><div style="font-size:24px;font-weight:800">${tot} h/day</div></div><div><small style="color:var(--mut);font-weight:700">YOU CAN STUDY</small><div style="font-size:24px;font-weight:800">${av} h/day</div></div></div>
+ <div class="bar" style="margin:14px 0 4px"><i style="width:${Math.min(100,tot/av*100)}%;background:${col}"></i></div>
+ ${rows.map(r=>`<div class="row"><span>${esc(r[0])}</span><small>${r[1]} h/day</small></div>`).join('')}</div>`}
+// ---- chat ----
+function chatInit(){const m=$('#ms');(me.chat||[]).forEach(x=>bub(x.r,x.t));if(!(me.chat||[]).length)m.innerHTML='<div class="empty" id="ce">Ask anything about your prep.<div class="chips" style="justify-content:center"><button data-a="ask" data-q="Am I ready for my exams?">Am I ready?</button><button data-a="ask" data-q="How many hours per day do I need?">Hours per day?</button><button data-a="ask" data-q="Make me a plan for this week">Plan my week</button></div></div>';m.scrollTop=m.scrollHeight}
+function chat(){return `<div class="head"><div><h2>AI Tutor</h2><p>Ask about readiness, hours and plans</p></div><button class="btn g s" data-a="clr">Clear</button></div><div class="chat"><div class="msgs" id="ms"></div><div class="send"><input id="ci" placeholder="Message your tutor…" data-enter="send"><button class="btn" data-a="send">Send</button></div></div>`}
+function bub(r,t){const e=document.createElement('div');e.className='m '+(r==='user'?'u':'a');e.textContent=t;$('#ms').appendChild(e);$('#ms').scrollTop=1e9;return e}
+let busy=false;
+async function send(q){if(busy)return;const i=$('#ci');q=(q||i.value).trim();if(!q)return;i.value='';$('#ce')?.remove();me.chat=me.chat||[];bub('user',q);me.chat.push({r:'user',t:q});busy=true;const b=bub('assistant','…');
+ let ans='';try{ans=(await api('chat','POST',{message:q,history:me.chat.slice(-9,-1).map(x=>({role:x.r,content:x.t}))})).text}catch(e){ans='Couldn\u2019t reach the tutor right now. Please try again.'}
+ b.textContent=ans;me.chat.push({r:'assistant',t:ans});me.chat=me.chat.slice(-40);save();busy=false}
+// ---- guided setup, syllabus upload ----
+function toast(m){const e=document.createElement('div');e.className='toast';e.textContent=m;document.body.appendChild(e);setTimeout(()=>e.remove(),2600)}
+function parse(t){const sep=/\r?\n/.test(t)?/\r?\n|;|•|▪|●/:/[,;•▪●]/,seen=new Set(),o=[];t.split(sep).forEach(l=>{l=l.replace(/^\s*(?:\d+(?:\.\d+)*[\.\)]?|[-–*]|[a-z][\.\)])\s+/i,'').replace(/\s+/g,' ').trim();if(l.length<3||l.length>100||/^\d+$/.test(l)||/^(page|unit|chapter|module)\s*\d*$/i.test(l))return;const k=l.toLowerCase();if(!seen.has(k)){seen.add(k);o.push(l)}});return o.slice(0,300)}
+function addTopics(id,arr){const s=sub(id),have=new Set(s.topics.map(t=>t.n.toLowerCase()));let n=0;arr.forEach(x=>{if(!have.has(x.toLowerCase())){s.topics.push({n:x,d:false});n++}});save();return n}
+async function readFile(f,id){if(!f)return;toast('Reading syllabus…');try{let t='';if(/\.pdf$/i.test(f.name)){pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';const d=await pdfjsLib.getDocument({data:await f.arrayBuffer()}).promise;for(let i=1;i<=d.numPages;i++){const c=await(await d.getPage(i)).getTextContent();t+=c.items.map(x=>x.str+(x.hasEOL?'\n':' ')).join('')+'\n'}}else t=await f.text();let p=parse(t);if(p.length<3)p=parse(t.replace(/[,.]\s+/g,'\n'));const n=addTopics(id,p);toast(n?'Added '+n+' topics':'No topics found — try pasting the text');R()}catch(e){toast('Couldn’t read that file — try a text file or paste it')}}
+const upl=id=>`<label class="btn g s" style="display:inline-block;cursor:pointer">⬆ Upload syllabus<input type="file" accept=".pdf,.txt,.md,.csv" hidden data-up="${id}"></label>`;
+function setup(){const st=S.step,v=LV[me.level],T=['Choose subjects','Add your syllabus','Set your exams'];let b='';
+ if(st==0){const names=[...new Set([...v.subs,...me.subs.map(s=>s.name)])];b=`<div class="chips">${names.map(n=>`<button class="${me.subs.some(s=>s.name===n)?'on':''}" data-a="pick" data-n="${esc(n)}">${esc(n)}</button>`).join('')}</div><label>Other subject</label><div class="send"><input id="cs" data-enter="addC"><button class="btn g" data-a="addC">Add</button></div>`}
+ else if(st==1)b=me.subs.map(s=>`<div class="card" style="margin-top:12px"><div class="row" style="border:0;padding:0"><b>${esc(s.name)}</b><small>${s.topics.length} topics</small></div><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">${upl(s.id)}<button class="btn g s" data-a="paste" data-s="${s.id}">Paste text</button></div>${S.paste===s.id?`<textarea id="pt" rows="5" style="margin-top:10px" placeholder="Paste your syllabus or topic list"></textarea><button class="btn s" style="margin-top:8px" data-a="addPaste" data-s="${s.id}">Add topics</button>`:''}</div>`).join('');
+ else b=me.subs.map(s=>`<div class="card" style="margin-top:12px"><b>${esc(s.name)}</b><div class="two"><div><label>Exam date</label><input type="date" data-a="exam" data-s="${s.id}" value="${esc(s.exam||'')}"></div><div><label>Hours per topic</label><input type="number" min="0.25" step="0.25" data-a="hpt" data-s="${s.id}" value="${s.hpt||1.5}"></div></div></div>`).join('')+`<label>Hours I can study per day</label><input type="number" min="1" max="16" step="0.5" data-a="avail" value="${me.avail||4}">`;
+ return `<div class="auth" style="max-width:560px"><div class="logo"><i>✦</i>StudyPilot</div><div class="steps">${T.map((x,i)=>`<i class="${i<=st?'on':''}"></i>`).join('')}</div><p class="stepn">Step ${st+1} of 3</p><h2>${T[st]}</h2>${b}<div class="err">${esc(S.err)}</div><div class="send" style="margin-top:10px">${st?'<button class="btn g" data-a="sb">Back</button>':''}<button class="btn" style="flex:1" data-a="sn">${st==2?'Finish':'Continue'}</button></div></div>`}
+function nextCard(){let t,b,k;const ns=me.subs.find(s=>!s.topics.length),nd=me.subs.find(s=>!s.exam);
+ if(!me.subs.length){t='Add your subjects';b='Choose what you study';k=0}else if(ns){t='Add syllabus for '+ns.name;b='Upload a file or paste your topics';k=1}else if(nd){t='Set exam date for '+nd.name;b='So we can plan your days';k=2}
+ else{const x=today()[0];if(!x)return '';return `<div class="card next"><small>Up next</small><h3>${esc(x.t.n)}</h3><p>${esc(x.s.name)}</p><button class="btn s" data-a="tg" data-s="${x.s.id}" data-t="${x.s.topics.indexOf(x.t)}">Mark as done</button></div>`}
+ return `<div class="card next"><small>Next step</small><h3>${esc(t)}</h3><p>${b}</p><button class="btn s" data-a="setup" data-k="${k}">Continue</button></div>`}
+// ---- actions ----
+async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(s)}}
+const uid=()=>Math.random().toString(36).slice(2,9);
+const sub=id=>me.subs.find(s=>s.id===id);
+const A={
+ lvl:e=>{S.level=e.dataset.k;S.screen='auth';S.err='';R()},
+ home:()=>{S.screen='land';R()},
+ mode:e=>{S.mode=e.dataset.k;S.err='';R()},
+ async go(){const em=$('#em').value.trim().toLowerCase(),pw=$('#pw').value,er=m=>{S.err=m;$('#er').textContent=m};
+  if(!/^\S+@\S+\.\S+$/.test(em))return er('Enter a valid email');if(pw.length<6)return er('Password needs at least 6 characters');
+  const su=S.mode==='signup';if(su&&!$('#nm').value.trim())return er('Enter your name');
+  try{const j=await api(su?'signup':'login','POST',{email:em,password:pw,name:su?$('#nm').value.trim():'',level:S.level,detail:su?$('#dt').value:''});LS('sp_tk',j.token);me=j.me;me.level=me.level||S.level;if(su){S.screen='setup';S.step=0}else{S.screen='app';S.tab='home'}S.err='';R()}catch(e){er(e.message)}},
+ out:()=>{LS('sp_tk','');me=null;S.screen='land';R()},
+ tab:e=>{S.tab=e.dataset.k;R();scrollTo(0,0)},
+ tg:e=>{const s=sub(e.dataset.s),t=s.topics[+e.dataset.t];t.d=!t.d;save();R()},
+ dt:e=>{sub(e.dataset.s).topics.splice(+e.dataset.t,1);save();R()},
+ open:e=>{S.open=S.open===e.dataset.s?null:e.dataset.s;R()},
+ addSub:e=>{const n=(e.dataset.n||$('#sn').value).trim();if(!n)return;const s={id:uid(),name:n,topics:[],hpt:1.5};me.subs.push(s);S.open=s.id;save();R()},
+ delS:e=>{me.subs=me.subs.filter(s=>s.id!==e.dataset.s);save();R()},
+ addT:e=>{const v=$('#tp').value.split(/[\n,]/).map(x=>x.trim()).filter(Boolean);if(!v.length)return;v.forEach(n=>sub(e.dataset.s).topics.push({n,d:false}));save();R()},
+ send:()=>send(),ask:e=>send(e.dataset.q),
+ clr:()=>{me.chat=[];save();R()},
+ pick:e=>{const n=e.dataset.n,i=me.subs.findIndex(s=>s.name===n);i>=0?me.subs.splice(i,1):me.subs.push({id:uid(),name:n,topics:[],hpt:1.5});save();R()},
+ addC:()=>{const n=$('#cs').value.trim();if(n&&!me.subs.some(s=>s.name===n)){me.subs.push({id:uid(),name:n,topics:[],hpt:1.5});save()}R()},
+ sb:()=>{S.step--;S.err='';R()},
+ sn:()=>{const st=S.step;let m='';if(st==0&&!me.subs.length)m='Pick at least one subject';if(st==1){const x=me.subs.find(s=>!s.topics.length);if(x)m='Add syllabus for '+x.name}if(st==2){const x=me.subs.find(s=>!s.exam);if(x)m='Set an exam date for '+x.name}S.err=m;if(m)return R();if(st<2)S.step++;else{me.ready=1;save();S.screen='app';S.tab='home'}R()},
+ paste:e=>{S.paste=S.paste===e.dataset.s?null:e.dataset.s;R()},
+ addPaste:e=>{const n=addTopics(e.dataset.s,parse($('#pt').value));toast(n?'Added '+n+' topics':'No topics found');S.paste=null;R()},
+ setup:e=>{S.screen='setup';S.step=+e.dataset.k;S.err='';R()}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(el&&A[el.dataset.a]&&!['INPUT'].includes(el.tagName)||(el&&el.type==='checkbox'))A[el.dataset.a](el)});
+document.addEventListener('change',e=>{const el=e.target,a=el.dataset.a;if(el.dataset.up){readFile(el.files[0],el.dataset.up);el.value='';return}if(a==='exam'){sub(el.dataset.s).exam=el.value;save();R()}else if(a==='hpt'){sub(el.dataset.s).hpt=Math.max(.25,+el.value||1.5);save();R()}else if(a==='avail'){me.avail=Math.max(1,+el.value||4);save();R()}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.enter)A[e.target.dataset.enter](e.target)});
+(async()=>{if(TK()){try{me=await api('state');S.screen=me.ready||me.subs.length?'app':'setup';S.step=0}catch(e){LS('sp_tk','')}}R()})();
+</script>
+</body>
+</html>
