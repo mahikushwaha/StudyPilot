@@ -24,4 +24,3 @@ python app.py        # http://localhost:5000
 4. **Render** – render.com → New → Blueprint (uses `render.yaml`) → pick the repo → set `DATABASE_URL` and `OPENROUTER_API_KEY` → Deploy.
 5. Open the Render URL; on a phone use Add to Home Screen.
 
-Free Render sleeps after ~15 min idle; the first visit then takes ~30–60 s. Without `OPENROUTER_API_KEY` the app still works and answers come from the Python tools.
